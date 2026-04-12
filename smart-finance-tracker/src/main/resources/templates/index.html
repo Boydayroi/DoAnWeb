@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinTrack Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 flex h-screen overflow-hidden font-sans text-gray-800">
+
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col">
+        <div class="h-16 flex items-center px-6 border-b border-gray-200">
+            <div class="bg-emerald-500 text-white p-1.5 rounded mr-2">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <span class="font-bold text-xl tracking-tight">FinTrack</span>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-1">
+            <a href="#" class="flex items-center px-3 py-2.5 bg-emerald-50 text-emerald-600 rounded-lg font-medium">
+                <i class="fa-solid fa-border-all w-6 text-center"></i> Dashboard
+            </a>
+            <a href="#" class="flex items-center px-3 py-2.5 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                <i class="fa-solid fa-arrow-right-arrow-left w-6 text-center"></i> Transactions
+            </a>
+            <a href="#" class="flex items-center px-3 py-2.5 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                <i class="fa-solid fa-wallet w-6 text-center"></i> Crypto Portfolio
+            </a>
+            <a href="#" class="flex items-center px-3 py-2.5 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                <i class="fa-solid fa-gear w-6 text-center"></i> Settings
+            </a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-screen overflow-hidden">
+        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 z-10">
+            <div class="relative w-96">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input type="text" placeholder="Search transactions, categories..." class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm">
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors flex items-center shadow-sm">
+                    <i class="fa-solid fa-plus mr-2"></i> Add Transaction
+                </button>
+                <button class="text-gray-400 hover:text-gray-600 relative">
+                    <i class="fa-regular fa-bell text-xl"></i>
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-rose-500 rounded-full"></span>
+                </button>
+                <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden border border-gray-300 cursor-pointer">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8">
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+                <p class="text-gray-500 text-sm mt-1">Welcome back! Here's your financial overview.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="text-sm font-medium text-gray-500">Total Balance</div>
+                        <div class="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-500">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900 mb-2">$48,574.32</div>
+                    <div class="text-xs text-gray-500 flex items-center">
+                        <span class="text-emerald-500 font-medium mr-1"><i class="fa-solid fa-arrow-trend-up"></i> +12.5%</span> from last month
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="text-sm font-medium text-gray-500">Monthly Income</div>
+                        <div class="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-500">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900 mb-2">$8,420.00</div>
+                    <div class="text-xs text-gray-500 flex items-center">
+                        <span class="text-emerald-500 font-medium mr-1"><i class="fa-solid fa-arrow-trend-up"></i> +5.2%</span> from last month
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="text-sm font-medium text-gray-500">Monthly Expenses</div>
+                        <div class="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center text-rose-500">
+                            <i class="fa-solid fa-arrow-trend-down"></i>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900 mb-2">$3,847.50</div>
+                    <div class="text-xs text-gray-500 flex items-center">
+                        <span class="text-rose-500 font-medium mr-1"><i class="fa-solid fa-arrow-trend-down"></i> -2.4%</span> from last month
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                    <h3 class="font-semibold text-gray-800 mb-6">Income vs Expenses</h3>
+                    <div class="h-64 w-full">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                    <h3 class="font-semibold text-gray-800 mb-6">Expenses by Category</h3>
+                    <div class="h-64 w-full flex justify-center">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [
+                    {
+                        label: 'Income',
+                        data: [6000, 5000, 7500, 6500, 8000, 8500],
+                        backgroundColor: '#10b981',
+                        borderRadius: 4,
+                        barPercentage: 0.6,
+                        categoryPercentage: 0.4
+                    },
+                    {
+                        label: 'Expenses',
+                        data: [4000, 3000, 3500, 3000, 4500, 3800],
+                        backgroundColor: '#f43f5e',
+                        borderRadius: 4,
+                        barPercentage: 0.6,
+                        categoryPercentage: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        align: 'end',
+                        labels: { usePointStyle: true, boxWidth: 8 }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { borderDash: [4, 4], display: true, drawBorder: false },
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + (value / 1000) + 'k';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        const pieCtx = document.getElementById('pieChart').getContext('2d');
+        new Chart(pieCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Food & Dining', 'Transport', 'Shopping', 'Bills'],
+                datasets: [{
+                    data: [40, 20, 15, 25],
+                    backgroundColor: ['#3b82f6', '#f43f5e', '#f59e0b', '#10b981'],
+                    borderWidth: 0,
+                    cutout: '70%'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { usePointStyle: true, boxWidth: 8, padding: 20 }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
