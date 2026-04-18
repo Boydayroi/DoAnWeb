@@ -16,42 +16,47 @@ public class TransactionController {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    // 1. CHỨC NĂNG THÊM VÀ SỬA (Dùng chung)
     @PostMapping("/add")
     public ResponseEntity<?> addTransaction(@RequestBody Transaction transaction, Principal principal) {
         
-        // Nếu giao dịch đã có ID (nghĩa là đang Sửa), ta phải giữ nguyên Ngày tạo cũ
         if (transaction.getId() != null) {
             Transaction oldData = transactionRepository.findById(transaction.getId()).orElse(null);
             if (oldData != null) {
                 transaction.setCreatedAt(oldData.getCreatedAt());
+            } else {
+                transaction.setCreatedAt(LocalDateTime.now());
             }
         } else {
-            // Nếu là Thêm mới thì lấy giờ hiện tại
             transaction.setCreatedAt(LocalDateTime.now());
         }
         
-        // Gắn tên chủ nhân cho giao dịch
         transaction.setUsername(principal.getName());
-        
-        // Lưu xuống Database
         transactionRepository.save(transaction);
         return ResponseEntity.ok("Thành công");
     }
 
-    // 2. CHỨC NĂNG XÓA (Đã được vá lỗi Null)
+    // ĐÃ SỬA LỖI Ở ĐÂY: Thêm ("id") vào @PathVariable
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteTransaction(@PathVariable Long id, Principal principal) {
+    public ResponseEntity<?> deleteTransaction(@PathVariable("id") Long id, Principal principal) {
         
-        // Tìm giao dịch trong XAMPP
         Transaction transaction = transactionRepository.findById(id).orElse(null);
 
-        // Đảo ngược chuỗi so sánh (principal.getName().equals...) để chống lỗi rỗng (NullPointerException)
-        if (transaction != null && principal.getName().equals(transaction.getUsername())) {
-            transactionRepository.delete(transaction);
-            return ResponseEntity.ok("Đã xóa thành công");
+        if (transaction == null) {
+            System.out.println("❌ Lỗi: Không tìm thấy giao dịch ID = " + id);
+            return ResponseEntity.badRequest().body("Không tìm thấy giao dịch");
         }
-        
-        return ResponseEntity.badRequest().body("Lỗi: Không tìm thấy giao dịch hoặc bạn không có quyền xóa!");
+
+        System.out.println("=== KIỂM TRA LỆNH XÓA ===");
+        System.out.println("Người đang đăng nhập: " + principal.getName());
+        System.out.println("Chủ của giao dịch: " + transaction.getUsername());
+
+        if (transaction.getUsername() == null || principal.getName().equals(transaction.getUsername())) {
+            transactionRepository.delete(transaction);
+            System.out.println("✅ Kết luận: Xóa thành công!");
+            return ResponseEntity.ok("Đã xóa");
+        }
+
+        System.out.println("⛔ Kết luận: Từ chối xóa vì sai chủ nhân!");
+        return ResponseEntity.badRequest().body("Không có quyền xóa giao dịch này");
     }
 }
