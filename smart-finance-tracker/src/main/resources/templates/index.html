@@ -8,40 +8,32 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="bg-gray-50 font-sans text-gray-900">
 
     <div class="flex h-screen overflow-hidden">
         <aside class="w-64 bg-white border-r border-gray-200 flex-shrink-0 hidden md:flex flex-col">
             <div class="p-6">
                 <div class="flex items-center gap-2 text-emerald-600 font-bold text-2xl">
-                    <i class="fa-solid fa-chart-line"></i>
-                    <span>FinTrack</span>
+                    <i class="fa-solid fa-chart-line"></i><span>FinTrack</span>
                 </div>
             </div>
-            
             <nav class="flex-1 px-4 space-y-2 overflow-y-auto">
                 <a href="#" class="flex items-center gap-3 px-4 py-3 text-emerald-600 bg-emerald-50 rounded-xl font-medium transition-all">
-                    <i class="fa-solid fa-house"></i>
-                    <span>Tổng quan</span>
+                    <i class="fa-solid fa-house"></i><span>Tổng quan</span>
                 </a>
                 <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl font-medium transition-all">
-                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                    <span>Giao dịch</span>
+                    <i class="fa-solid fa-arrow-right-arrow-left"></i><span>Giao dịch</span>
                 </a>
                 <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl font-medium transition-all">
-                    <i class="fa-solid fa-wallet"></i>
-                    <span>Danh mục Crypto</span>
+                    <i class="fa-solid fa-wallet"></i><span>Danh mục Crypto</span>
                 </a>
                 <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl font-medium transition-all">
-                    <i class="fa-solid fa-gear"></i>
-                    <span>Cài đặt</span>
+                    <i class="fa-solid fa-gear"></i><span>Cài đặt</span>
                 </a>
             </nav>
-
             <div class="p-4 border-t border-gray-100">
                 <a th:href="@{/logout}" class="flex items-center gap-3 px-4 py-3 text-rose-600 hover:bg-rose-50 rounded-xl font-medium transition-all">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    <span>Đăng xuất</span>
+                    <i class="fa-solid fa-right-from-bracket"></i><span>Đăng xuất</span>
                 </a>
             </div>
         </aside>
@@ -53,13 +45,10 @@
                     <input type="text" placeholder="Tìm kiếm giao dịch..." class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all">
                 </div>
                 <div class="flex items-center gap-4">
-                    <button class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 shadow-sm transition-all">
-                        <i class="fa-solid fa-plus"></i>
-                        <span>Thêm giao dịch</span>
+                    <button onclick="openModal()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 shadow-sm transition-all">
+                        <i class="fa-solid fa-plus"></i><span>Thêm giao dịch</span>
                     </button>
-                    <div class="w-10 h-10 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-700 font-bold">
-                        H
-                    </div>
+                    <div class="w-10 h-10 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-700 font-bold">H</div>
                 </div>
             </header>
 
@@ -74,85 +63,58 @@
                         <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                             <div class="flex justify-between items-start mb-4">
                                 <span class="text-gray-500 font-medium">Tổng số dư</span>
-                                <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                                    <i class="fa-solid fa-wallet"></i>
-                                </div>
+                                <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center"><i class="fa-solid fa-wallet"></i></div>
                             </div>
-                            <div class="text-3xl font-bold text-gray-900 mb-1">48.574.320 đ</div>
-                            <div class="text-sm text-emerald-600 font-medium">
-                                <i class="fa-solid fa-arrow-up"></i> +12.5% <span class="text-gray-400 font-normal">so với tháng trước</span>
-                            </div>
+                            <div class="text-3xl font-bold text-gray-900 mb-1" th:text="${#numbers.formatDecimal(totalBalance, 0, 'COMMA', 0, 'POINT')} + ' đ'">0 đ</div>
                         </div>
 
                         <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                             <div class="flex justify-between items-start mb-4">
-                                <span class="text-gray-500 font-medium">Thu nhập tháng</span>
-                                <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
-                                    <i class="fa-solid fa-money-bill-trend-up"></i>
-                                </div>
+                                <span class="text-gray-500 font-medium">Thu nhập</span>
+                                <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="fa-solid fa-money-bill-trend-up"></i></div>
                             </div>
-                            <div class="text-3xl font-bold text-gray-900 mb-1">8.420.000 đ</div>
-                            <div class="text-sm text-emerald-600 font-medium">
-                                <i class="fa-solid fa-arrow-up"></i> +5.2% <span class="text-gray-400 font-normal">so với tháng trước</span>
-                            </div>
+                            <div class="text-3xl font-bold text-blue-600 mb-1" th:text="'+' + ${#numbers.formatDecimal(totalIncome, 0, 'COMMA', 0, 'POINT')} + ' đ'">+0 đ</div>
                         </div>
 
                         <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                             <div class="flex justify-between items-start mb-4">
-                                <span class="text-gray-500 font-medium">Chi tiêu tháng</span>
-                                <div class="w-10 h-10 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
-                                    <i class="fa-solid fa-credit-card"></i>
-                                </div>
+                                <span class="text-gray-500 font-medium">Chi tiêu</span>
+                                <div class="w-10 h-10 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center"><i class="fa-solid fa-credit-card"></i></div>
                             </div>
-                            <div class="text-3xl font-bold text-gray-900 mb-1">3.847.500 đ</div>
-                            <div class="text-sm text-rose-600 font-medium">
-                                <i class="fa-solid fa-arrow-down"></i> -2.4% <span class="text-gray-400 font-normal">so với tháng trước</span>
-                            </div>
+                            <div class="text-3xl font-bold text-rose-600 mb-1" th:text="'-' + ${#numbers.formatDecimal(totalExpense, 0, 'COMMA', 0, 'POINT')} + ' đ'">-0 đ</div>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                         <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                             <h3 class="text-lg font-bold text-gray-900 mb-6">Thu nhập và Chi tiêu</h3>
-                            <div style="height: 300px; position: relative;">
-                                <canvas id="incomeExpenseChart"></canvas>
-                            </div>
+                            <div style="height: 300px; position: relative;"><canvas id="incomeExpenseChart"></canvas></div>
                         </div>
                         <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                             <h3 class="text-lg font-bold text-gray-900 mb-6">Chi tiêu theo hạng mục</h3>
-                            <div style="max-width: 300px; margin: 0 auto;">
-                                <canvas id="categoryChart"></canvas>
-                            </div>
+                            <div style="max-width: 300px; margin: 0 auto;"><canvas id="categoryChart"></canvas></div>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
                             <h3 class="text-lg font-bold text-gray-900 mb-6">Giao dịch gần đây</h3>
-                            <div class="overflow-x-auto">
+                            <div class="overflow-x-auto max-h-[350px] overflow-y-auto">
                                 <table class="w-full text-left">
-                                    <thead>
+                                    <thead class="sticky top-0 bg-white">
                                         <tr class="text-gray-400 text-sm border-b border-gray-50">
-                                            <th class="pb-4 font-medium">Ngày</th>
                                             <th class="pb-4 font-medium">Danh mục</th>
                                             <th class="pb-4 font-medium">Nội dung</th>
+                                            <th class="pb-4 font-medium text-right">Số tiền</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-sm">
-                                        <tr class="border-b border-gray-50">
-                                            <td class="py-4 text-gray-600">12 Th4, 2026</td>
-                                            <td class="py-4"><span class="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-xs font-medium">Lương</span></td>
-                                            <td class="py-4 font-semibold text-gray-900">Lương tháng này</td>
-                                        </tr>
-                                        <tr class="border-b border-gray-50">
-                                            <td class="py-4 text-gray-600">11 Th4, 2026</td>
-                                            <td class="py-4"><span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">Tiền thuê</span></td>
-                                            <td class="py-4 font-semibold text-gray-900">Tiền nhà tháng 4</td>
-                                        </tr>
-                                        <tr class="border-b border-gray-50">
-                                            <td class="py-4 text-gray-600">10 Th4, 2026</td>
-                                            <td class="py-4"><span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-medium">Ăn uống</span></td>
-                                            <td class="py-4 font-semibold text-gray-900">Siêu thị Co.op Mart</td>
+                                        <tr th:each="t : ${transactions}" class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                                            <td class="py-4">
+                                                <span th:text="${t.category}" th:class="${t.type == 'INCOME' ? 'px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-xs font-medium' : 'px-3 py-1 bg-rose-50 text-rose-600 rounded-full text-xs font-medium'}"></span>
+                                            </td>
+                                            <td class="py-4 font-semibold text-gray-900" th:text="${t.description}"></td>
+                                            <td class="py-4 text-right font-bold" th:text="${t.type == 'INCOME' ? '+' : '-'} + ${#numbers.formatDecimal(t.amount, 0, 'COMMA', 0, 'POINT')} + ' đ'" th:classappend="${t.type == 'INCOME' ? 'text-emerald-600' : 'text-rose-600'}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -164,32 +126,20 @@
                             <div class="space-y-4">
                                 <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-500">
-                                            <i class="fa-brands fa-bitcoin text-xl"></i>
-                                        </div>
-                                        <div>
-                                            <div class="font-bold text-gray-900">Bitcoin</div>
-                                            <div class="text-xs text-gray-500">0.5 BTC</div>
-                                        </div>
+                                        <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-500"><i class="fa-brands fa-bitcoin text-xl"></i></div>
+                                        <div><div class="font-bold text-gray-900">Bitcoin</div><div class="text-xs text-gray-500">0.5 BTC</div></div>
                                     </div>
                                     <div class="text-right">
-                                        <div class="font-bold text-gray-900">1.696.000.000 đ</div>
-                                        <div class="text-xs text-emerald-600 font-medium">+2.34%</div>
+                                        <div class="font-bold text-gray-900">1.696.000.000 đ</div><div class="text-xs text-emerald-600 font-medium">+2.34%</div>
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-500">
-                                            <i class="fa-brands fa-ethereum text-xl"></i>
-                                        </div>
-                                        <div>
-                                            <div class="font-bold text-gray-900">Ethereum</div>
-                                            <div class="text-xs text-gray-500">2.8 ETH</div>
-                                        </div>
+                                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-500"><i class="fa-brands fa-ethereum text-xl"></i></div>
+                                        <div><div class="font-bold text-gray-900">Ethereum</div><div class="text-xs text-gray-500">2.8 ETH</div></div>
                                     </div>
                                     <div class="text-right">
-                                        <div class="font-bold text-gray-900">86.400.000 đ</div>
-                                        <div class="text-xs text-rose-500 font-medium">-1.23%</div>
+                                        <div class="font-bold text-gray-900">86.400.000 đ</div><div class="text-xs text-rose-500 font-medium">-1.23%</div>
                                     </div>
                                 </div>
                             </div>
@@ -200,44 +150,97 @@
         </main>
     </div>
 
+    <div id="transactionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md border border-gray-100">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-900">Thêm giao dịch mới</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            
+            <form id="addTransactionForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Số tiền (VNĐ)</label>
+                    <input type="number" id="amount" name="amount" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Loại giao dịch</label>
+                    <select id="type" name="type" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+                        <option value="INCOME">Thu nhập (+)</option>
+                        <option value="EXPENSE">Chi tiêu (-)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Danh mục</label>
+                    <input type="text" id="category" name="category" placeholder="Ví dụ: Ăn uống, Lương..." required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nội dung</label>
+                    <textarea id="description" name="description" rows="2" placeholder="Ghi chú thêm..." class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"></textarea>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl transition-all shadow-lg">Lưu giao dịch</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
+        // Modal Control
+        function openModal() { document.getElementById('transactionModal').classList.remove('hidden'); }
+        function closeModal() { document.getElementById('transactionModal').classList.add('hidden'); }
+
+        // Vẽ biểu đồ khi load trang
         document.addEventListener('DOMContentLoaded', function() {
-            // Biểu đồ Cột
             const ctx1 = document.getElementById('incomeExpenseChart').getContext('2d');
             new Chart(ctx1, {
                 type: 'bar',
                 data: {
-                    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6'],
+                    labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6'],
                     datasets: [
                         { label: 'Thu nhập', data: [6000, 5000, 7500, 6500, 8000, 8500], backgroundColor: '#10b981', borderRadius: 6 },
                         { label: 'Chi tiêu', data: [4000, 3000, 3500, 3000, 4500, 3800], backgroundColor: '#f43f5e', borderRadius: 6 }
                     ]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'top', align: 'end' } },
-                    scales: { y: { beginAtZero: true }, x: { grid: { display: false } } }
-                }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top', align: 'end' } }, scales: { y: { beginAtZero: true }, x: { grid: { display: false } } } }
             });
 
-            // Biểu đồ Tròn
             const ctx2 = document.getElementById('categoryChart').getContext('2d');
             new Chart(ctx2, {
                 type: 'doughnut',
                 data: {
                     labels: ['Ăn uống', 'Di chuyển', 'Mua sắm', 'Hóa đơn'],
-                    datasets: [{
-                        data: [40, 25, 20, 15],
-                        backgroundColor: ['#3b82f6', '#f43f5e', '#f59e0b', '#10b981'],
-                        borderWidth: 0
-                    }]
+                    datasets: [{ data: [40, 25, 20, 15], backgroundColor: ['#3b82f6', '#f43f5e', '#f59e0b', '#10b981'], borderWidth: 0 }]
                 },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { position: 'bottom' } },
-                    cutout: '70%'
+                options: { responsive: true, plugins: { legend: { position: 'bottom' } }, cutout: '70%' }
+            });
+        });
+
+        // Gửi dữ liệu bằng AJAX
+        document.getElementById('addTransactionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const data = {
+                amount: document.getElementById('amount').value,
+                type: document.getElementById('type').value,
+                category: document.getElementById('category').value,
+                description: document.getElementById('description').value
+            };
+
+            fetch('/api/transactions/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if(response.ok) {
+                    closeModal();
+                    location.reload(); 
+                } else {
+                    alert('Lỗi khi lưu! Kiểm tra lại console.');
                 }
+            })
+            .catch(error => {
+                console.error("Fetch Error: ", error);
+                alert('Không thể kết nối đến máy chủ.');
             });
         });
     </script>
