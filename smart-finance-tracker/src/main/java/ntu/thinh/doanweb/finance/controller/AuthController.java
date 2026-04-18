@@ -22,6 +22,11 @@ public class AuthController {
     public String showRegisterPage() {
         return "register";
     }
+ // THÊM ĐOẠN NÀY VÀO ĐỂ MỞ TRANG ĐĂNG NHẬP
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "login";
+    }
 
     // 2. Xử lý logic đăng ký người dùng
     @PostMapping("/register")

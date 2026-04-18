@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 @RestController
@@ -16,11 +17,11 @@ public class TransactionController {
     private TransactionRepository transactionRepository;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addTransaction(@RequestBody Transaction transaction) {
+    public ResponseEntity<?> addTransaction(@RequestBody Transaction transaction, Principal principal) {
         
         transaction.setCreatedAt(LocalDateTime.now());
         
-        
+        transaction.setUsername(principal.getName());
         transactionRepository.save(transaction);
         
         return ResponseEntity.ok("Thành công");

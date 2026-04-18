@@ -15,6 +15,7 @@ public class Transaction {
     private String category;
     private String description;
     private LocalDateTime createdAt;
+    private String username;
 
     // Getters and Setters (Quan trọng để Spring Boot đọc dữ liệu)
     public Long getId() { return id; }
@@ -34,5 +35,7 @@ public class Transaction {
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
   
 }
