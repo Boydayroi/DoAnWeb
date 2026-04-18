@@ -26,12 +26,16 @@
             Bạn đã đăng xuất thành công.
         </div>
 
+        <div th:if="${param.registered}" class="bg-blue-50 text-blue-600 p-3 rounded-lg text-sm text-center mb-4 border border-blue-100 font-medium">
+            <i class="fa-solid fa-circle-check mr-1"></i> Đăng ký thành công! Vui lòng đăng nhập.
+        </div>
+
         <form th:action="@{/login}" method="POST" class="space-y-5">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Tên đăng nhập</label>
                 <div class="relative">
                     <i class="fa-regular fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                    <input type="text" name="username" required class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                    <input type="text" name="username" required class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all">
                 </div>
             </div>
             
@@ -39,14 +43,19 @@
                 <label class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
                 <div class="relative">
                     <i class="fa-solid fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                    <input type="password" name="password" required class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                    <input type="password" name="password" required class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all">
                 </div>
             </div>
 
-            <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-2.5 rounded-lg transition-colors shadow-sm mt-2">
+            <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-2.5 rounded-lg transition-all shadow-sm mt-2">
                 Đăng nhập vào hệ thống
             </button>
         </form>
+
+        <div class="mt-6 pt-6 border-t border-gray-100 text-center text-sm text-gray-600">
+            Chưa có tài khoản? 
+            <a href="/register" class="text-emerald-600 font-bold hover:underline hover:text-emerald-700 transition-all">Đăng ký ngay</a>
+        </div>
     </div>
 
 </body>

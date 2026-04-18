@@ -16,15 +16,17 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // 1. Chui vào XAMPP tìm xem có user nào tên này không
         User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("Không tìm thấy tài khoản!");
-        }
         
-       
+        if (user == null) {
+            throw new UsernameNotFoundException("Không tìm thấy tài khoản trong Database");
+        }
+
+        // 2. Nếu tìm thấy, báo cho Spring Security biết tên và mật khẩu để nó tự đem đi so sánh
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
-                .password(user.getPassword())
+                .password(user.getPassword()) // Cái mật khẩu {noop}123 sẽ được truyền vào đây
                 .roles("USER")
                 .build();
     }
