@@ -16,7 +16,6 @@
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 overflow-hidden">
-
     <div class="flex h-screen">
         <aside class="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
             <div class="p-6 flex items-center gap-3 text-emerald-600 font-bold text-2xl">
@@ -24,45 +23,39 @@
                 <span>FinTrack</span>
             </div>
             <nav class="flex-1 px-4 mt-4 space-y-1">
-                <a href="/" class="flex items-center gap-3 px-4 py-3 bg-emerald-50 text-emerald-600 rounded-xl font-semibold transition-all">
-                    <i class="fa-solid fa-house"></i>Tổng quan
-                </a>
-                <button onclick="openSettingsModal()" class="w-full flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 hover:text-gray-900 rounded-xl font-medium transition-all text-left">
-                    <i class="fa-solid fa-gear"></i>Cài đặt
-                </button>
+                <a href="/" class="flex items-center gap-3 px-4 py-3 bg-emerald-50 text-emerald-600 rounded-xl font-semibold"><i class="fa-solid fa-house"></i>Tổng quan</a>
+                <button onclick="openSettingsModal()" class="w-full flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 hover:text-gray-900 rounded-xl font-medium transition-all text-left"><i class="fa-solid fa-gear"></i>Cài đặt</button>
             </nav>
             <div class="p-4 border-t border-gray-100">
-                <a th:href="@{/logout}" class="flex items-center gap-3 px-4 py-3 text-rose-500 hover:bg-rose-50 rounded-xl font-semibold transition-all">
-                    <i class="fa-solid fa-right-from-bracket"></i>Đăng xuất
-                </a>
+                <a th:href="@{/logout}" class="flex items-center gap-3 px-4 py-3 text-rose-500 hover:bg-rose-50 rounded-xl font-semibold"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a>
             </div>
         </aside>
 
         <main class="flex-1 flex flex-col overflow-hidden">
             <header class="h-20 bg-white border-b border-gray-100 flex items-center justify-between px-8 shrink-0">
                 <div>
-                    <h2 class="text-xl font-bold">Chào quay trở lại, <span class="text-emerald-600" th:text="${username}">Hà Nguyễn Tiến Thịnh</span>!</h2>
+                    <h2 class="text-xl font-bold">Chào quay trở lại, <span class="text-emerald-600" id="headerFullName" th:text="${username}">User</span>!</h2>
                     <p class="text-xs text-gray-400 font-medium uppercase tracking-wider">Hôm nay: <span id="currentDate"></span></p>
                 </div>
-                
                 <div class="flex items-center gap-6">
-                    <button onclick="openAddModal()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-emerald-100 transition-all">
+                    <button onclick="openAddModal()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-emerald-100">
                         <i class="fa-solid fa-plus"></i>Thêm giao dịch
                     </button>
-                    <a href="/profile" class="flex items-center gap-3 pl-6 border-l border-gray-100 hover:bg-gray-50 p-2 rounded-xl transition-all cursor-pointer group">
+                    <a href="/profile" class="flex items-center gap-3 pl-6 border-l border-gray-100 hover:bg-gray-50 p-2 rounded-xl transition-all group">
                         <div class="text-right hidden sm:block">
-                            <p class="text-sm font-bold text-gray-900 group-hover:text-emerald-600 transition-colors" th:text="${username}">Hà Nguyễn Tiến Thịnh</p>
+                            <p class="text-sm font-bold text-gray-900 group-hover:text-emerald-600" id="sideFullName" th:text="${username}">User</p>
                             <p class="text-xs text-gray-400">Thành viên Pro</p>
                         </div>
-                        <div class="w-11 h-11 rounded-xl bg-emerald-100 border-2 border-white shadow-sm flex items-center justify-center text-emerald-700 font-bold text-lg uppercase group-hover:bg-emerald-200 transition-colors" 
-                             th:text="${#strings.substring(username,0,1)}">T</div>
+                        <div class="w-11 h-11 rounded-xl bg-emerald-100 border-2 border-white shadow-sm flex items-center justify-center text-emerald-700 font-bold text-lg uppercase overflow-hidden">
+                            <span id="headerAvatarText" th:text="${#strings.substring(username,0,1)}">T</span>
+                            <img id="headerAvatarImg" src="" class="hidden w-full h-full object-cover">
+                        </div>
                     </a>
                 </div>
             </header>
 
             <div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
                 <div class="max-w-6xl mx-auto space-y-8">
-                    
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 relative overflow-hidden">
                             <div class="absolute right-0 top-0 p-4 opacity-10 text-emerald-600 text-6xl"><i class="fa-solid fa-wallet"></i></div>
@@ -86,8 +79,7 @@
                             <h4 class="font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-piggy-bank text-emerald-500"></i>Mục tiêu tiết kiệm</h4>
                             <button onclick="openSavingModal()" class="text-sm font-bold text-emerald-600 bg-emerald-50 px-4 py-2 rounded-xl hover:bg-emerald-100 transition-all">+ Tạo quỹ mới</button>
                         </div>
-                        <div id="savingGoalsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        </div>
+                        <div id="savingGoalsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -117,21 +109,15 @@
                                 </thead>
                                 <tbody class="divide-y divide-gray-50">
                                     <tr th:each="t : ${transactions}" class="group hover:bg-gray-50 transition-all">
-                                        <td class="px-8 py-5">
-                                            <span th:text="${t.category}" th:class="${t.type == 'INCOME' ? 'px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg text-[11px] font-bold' : 'px-3 py-1.5 bg-rose-50 text-rose-600 rounded-lg text-[11px] font-bold'}"></span>
-                                        </td>
+                                        <td class="px-8 py-5"><span th:text="${t.category}" th:class="${t.type == 'INCOME' ? 'px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg text-[11px] font-bold' : 'px-3 py-1.5 bg-rose-50 text-rose-600 rounded-lg text-[11px] font-bold'}"></span></td>
                                         <td class="px-8 py-5">
                                             <p class="font-bold text-gray-900 text-sm" th:text="${t.description}"></p>
                                             <p class="text-[10px] text-gray-400" th:text="${#temporals.format(t.createdAt, 'dd/MM/yyyy HH:mm')}"></p>
                                         </td>
                                         <td class="px-8 py-5 text-right font-black text-sm" th:text="${t.type == 'INCOME' ? '+' : '-'} + ${#numbers.formatDecimal(t.amount, 0, 'COMMA', 0, 'POINT')} + ' đ'" th:classappend="${t.type == 'INCOME' ? 'text-emerald-600' : 'text-rose-600'}"></td>
                                         <td class="px-8 py-5 text-center flex justify-center gap-2">
-                                            <button th:data-id="${t.id}" th:data-amount="${t.amount}" th:data-type="${t.type}" th:data-category="${t.category}" th:data-desc="${t.description}" onclick="fillEditModal(this)" class="w-8 h-8 text-gray-300 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-all flex items-center justify-center">
-                                                <i class="fa-solid fa-pen text-xs"></i>
-                                            </button>
-                                            <button th:onclick="'deleteTransaction(' + ${t.id} + ')'" class="w-8 h-8 text-gray-300 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all flex items-center justify-center">
-                                                <i class="fa-regular fa-trash-can text-xs"></i>
-                                            </button>
+                                            <button th:data-id="${t.id}" th:data-amount="${t.amount}" th:data-type="${t.type}" th:data-category="${t.category}" th:data-desc="${t.description}" onclick="fillEditModal(this)" class="w-8 h-8 text-gray-300 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-all flex items-center justify-center"><i class="fa-solid fa-pen text-xs"></i></button>
+                                            <button th:onclick="'deleteTransaction(' + ${t.id} + ')'" class="w-8 h-8 text-gray-300 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all flex items-center justify-center"><i class="fa-regular fa-trash-can text-xs"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -146,7 +132,7 @@
     <div id="settingsModal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
         <div class="bg-white p-8 rounded-[32px] shadow-2xl w-full max-w-md border border-gray-100">
             <div class="flex justify-between items-center mb-8">
-                <h3 class="text-2xl font-black text-gray-900 tracking-tight">Cài đặt tài khoản</h3>
+                <h3 class="text-2xl font-black text-gray-900 tracking-tight">Đổi mật khẩu</h3>
                 <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-gray-900"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div class="space-y-5">
@@ -226,6 +212,20 @@
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById('currentDate').innerText = new Date().toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
             
+            fetch('/api/user/me')
+                .then(res => res.json())
+                .then(user => {
+                    if (user.fullName) {
+                        document.getElementById('headerFullName').innerText = user.fullName;
+                        document.getElementById('sideFullName').innerText = user.fullName;
+                    }
+                    if (user.avatar) {
+                        document.getElementById('headerAvatarImg').src = user.avatar;
+                        document.getElementById('headerAvatarImg').classList.remove('hidden');
+                        document.getElementById('headerAvatarText').classList.add('hidden');
+                    }
+                });
+
             /*<![CDATA[*/ const rawTransactions = /*[[${transactions}]]*/ []; /*]]>*/
             const transactions = rawTransactions || [];
             
@@ -276,33 +276,29 @@
                 .then(res => res.json())
                 .then(data => {
                     const container = document.getElementById('savingGoalsContainer');
-                    if (data.length === 0) {
-                        container.innerHTML = '<p class="text-gray-400 text-sm italic col-span-full">Chưa có quỹ nào</p>';
-                        return;
-                    }
+                    if (data.length === 0) { container.innerHTML = '<p class="text-gray-400 text-sm italic col-span-full">Chưa có quỹ tiết kiệm nào</p>'; return; }
                     let html = '';
                     data.forEach(goal => {
                         const percent = goal.targetAmount > 0 ? Math.min(100, Math.round((goal.currentAmount / goal.targetAmount) * 100)) : 0;
                         html += `
-                            <div class="border border-gray-100 rounded-2xl p-5 shadow-sm hover:border-emerald-200 hover:shadow-md transition-all relative overflow-hidden">
-                                ${percent === 100 ? '<div class="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl">HOÀN THÀNH</div>' : ''}
+                            <div class="border border-gray-100 rounded-2xl p-5 shadow-sm hover:border-emerald-200 transition-all relative overflow-hidden">
+                                ${percent === 100 ? '<div class="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl">XONG</div>' : ''}
                                 <div class="flex justify-between items-start mb-3">
-                                    <h5 class="font-bold text-gray-900 text-lg truncate pr-4">${goal.goalName}</h5>
-                                    <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">${percent}%</span>
+                                    <h5 class="font-bold text-gray-900 truncate pr-4">${goal.goalName}</h5>
+                                    <span class="text-xs font-bold text-emerald-600">${percent}%</span>
                                 </div>
                                 <div class="w-full bg-gray-100 rounded-full h-2 mb-3 overflow-hidden">
-                                    <div class="bg-emerald-500 h-2 rounded-full transition-all duration-1000" style="width: ${percent}%"></div>
+                                    <div class="bg-emerald-500 h-2 rounded-full" style="width: ${percent}%"></div>
                                 </div>
                                 <div class="flex justify-between text-xs font-bold text-gray-400 mb-5">
-                                    <span class="text-gray-700">${goal.currentAmount.toLocaleString('vi-VN')} đ</span>
+                                    <span>${goal.currentAmount.toLocaleString('vi-VN')} đ</span>
                                     <span>/ ${goal.targetAmount.toLocaleString('vi-VN')} đ</span>
                                 </div>
                                 <div class="flex gap-2">
-                                    <button onclick="addMoneyToGoal(${goal.id})" class="flex-1 text-xs font-bold bg-blue-50 text-blue-600 py-2.5 rounded-xl hover:bg-blue-100 transition-all"><i class="fa-solid fa-plus mr-1"></i>Nạp</button>
-                                    <button onclick="deleteGoal(${goal.id})" class="text-xs font-bold bg-rose-50 text-rose-600 px-3 py-2.5 rounded-xl hover:bg-rose-100 transition-all"><i class="fa-solid fa-trash"></i></button>
+                                    <button onclick="addMoneyToGoal(${goal.id})" class="flex-1 text-[10px] font-bold bg-emerald-50 text-emerald-600 py-2 rounded-xl">Nạp tiền</button>
+                                    <button onclick="deleteGoal(${goal.id})" class="text-xs bg-rose-50 text-rose-600 px-3 py-2 rounded-xl"><i class="fa-solid fa-trash"></i></button>
                                 </div>
-                            </div>
-                        `;
+                            </div>`;
                     });
                     container.innerHTML = html;
                 });
@@ -310,37 +306,31 @@
 
         function openSavingModal() { document.getElementById('savingModal').classList.remove('hidden'); }
         function closeSavingModal() { document.getElementById('savingModal').classList.add('hidden'); }
-
         document.getElementById('addSavingForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const data = { goalName: document.getElementById('goalName').value, targetAmount: document.getElementById('targetAmount').value };
-            fetch('/api/savings/add', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(res => { if(res.ok) { closeSavingModal(); location.reload(); }});
+            fetch('/api/savings/add', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(res => { if(res.ok) location.reload(); });
         });
 
         function addMoneyToGoal(id) {
-            const amountStr = prompt("Nhập số tiền:");
-            if (amountStr && !isNaN(amountStr) && amountStr > 0) {
-                fetch(`/api/savings/add-money/${id}?amount=${amountStr}`, { method: 'POST' }).then(res => { if(res.ok) location.reload(); });
-            }
+            const amt = prompt("Nhập số tiền:");
+            if (amt && !isNaN(amt)) fetch(`/api/savings/add-money/${id}?amount=${amt}`, { method: 'POST' }).then(res => { if(res.ok) location.reload(); });
         }
 
-        function deleteGoal(id) {
-            if(confirm('Xóa quỹ?')) { fetch('/api/savings/delete/' + id, { method: 'DELETE' }).then(res => { if(res.ok) location.reload(); }); }
-        }
-
+        function deleteGoal(id) { if(confirm('Xóa?')) fetch('/api/savings/delete/' + id, { method: 'DELETE' }).then(res => { if(res.ok) location.reload(); }); }
         function openSettingsModal() { document.getElementById('settingsModal').classList.remove('hidden'); }
         function closeSettingsModal() { document.getElementById('settingsModal').classList.add('hidden'); }
         function saveSettings() {
-            const pass1 = document.getElementById('newPassword').value;
-            const pass2 = document.getElementById('confirmPassword').value;
-            if(!pass1 || pass1 !== pass2 || pass1.length < 6) { alert("Lỗi!"); return; }
-            fetch('/api/user/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ newPassword: pass1 }) }).then(res => { if(res.ok) { alert("Thành công!"); window.location.href = "/logout"; }});
+            const p1 = document.getElementById('newPassword').value;
+            const p2 = document.getElementById('confirmPassword').value;
+            if(p1 === p2 && p1.length >= 6) {
+                fetch('/api/user/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ newPassword: p1 }) }).then(res => { if(res.ok) { alert("Xong!"); location.href="/logout"; }});
+            } else alert("Lỗi!");
         }
 
         function openModal() { document.getElementById('transactionModal').classList.remove('hidden'); }
         function closeModal() { document.getElementById('transactionModal').classList.add('hidden'); }
         function openAddModal() { document.getElementById('transactionId').value = ''; document.getElementById('addTransactionForm').reset(); setType('INCOME'); document.getElementById('modalTitle').innerText = 'Thêm giao dịch'; openModal(); }
-        
         function fillEditModal(btn) {
             document.getElementById('transactionId').value = btn.getAttribute('data-id');
             document.getElementById('amount').value = btn.getAttribute('data-amount');
@@ -350,19 +340,12 @@
             document.getElementById('modalTitle').innerText = 'Sửa giao dịch';
             openModal();
         }
-
         function setType(t) {
             document.getElementById('type').value = t;
             const bI = document.getElementById('btnIncome'), bE = document.getElementById('btnExpense');
-            if(t === 'INCOME') {
-                bI.className = "py-3 bg-emerald-50 text-emerald-600 border-2 border-emerald-500 rounded-2xl font-bold";
-                bE.className = "py-3 bg-gray-50 text-gray-400 border-2 border-transparent rounded-2xl font-bold";
-            } else {
-                bE.className = "py-3 bg-rose-50 text-rose-600 border-2 border-rose-500 rounded-2xl font-bold";
-                bI.className = "py-3 bg-gray-50 text-gray-400 border-2 border-transparent rounded-2xl font-bold";
-            }
+            if(t === 'INCOME') { bI.className = "py-3 bg-emerald-50 text-emerald-600 border-2 border-emerald-500 rounded-2xl font-bold"; bE.className = "py-3 bg-gray-50 text-gray-400 border-2 border-transparent rounded-2xl font-bold"; }
+            else { bE.className = "py-3 bg-rose-50 text-rose-600 border-2 border-rose-500 rounded-2xl font-bold"; bI.className = "py-3 bg-gray-50 text-gray-400 border-2 border-transparent rounded-2xl font-bold"; }
         }
-
         document.getElementById('addTransactionForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const id = document.getElementById('transactionId').value;
@@ -370,10 +353,7 @@
             if(id) data.id = id;
             fetch('/api/transactions/add', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(res => { if(res.ok) location.reload(); });
         });
-
-        function deleteTransaction(id) {
-            if(confirm('Xóa?')) { fetch('/api/transactions/delete/' + id, { method: 'DELETE' }).then(res => { if(res.ok) location.reload(); }); }
-        }
+        function deleteTransaction(id) { if(confirm('Xóa?')) fetch('/api/transactions/delete/' + id, { method: 'DELETE' }).then(res => { if(res.ok) location.reload(); }); }
     </script>
 </body>
 </html>
