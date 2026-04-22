@@ -20,31 +20,16 @@
     <div class="flex h-screen">
         <aside class="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
             <div class="p-6 flex items-center gap-3 text-emerald-600 font-bold text-2xl">
-                <div class="bg-emerald-500 text-white p-2 rounded-lg">
-                    <i class="fa-solid fa-chart-pie text-xl"></i>
-                </div>
+                <div class="bg-emerald-500 text-white p-2 rounded-lg"><i class="fa-solid fa-chart-pie text-xl"></i></div>
                 <span>FinTrack</span>
             </div>
-            
             <nav class="flex-1 px-4 mt-4 space-y-1">
-                <a href="/" class="flex items-center gap-3 px-4 py-3 bg-emerald-50 text-emerald-600 rounded-xl font-semibold transition-all">
-                    <i class="fa-solid fa-house"></i>Tổng quan
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 hover:text-gray-900 rounded-xl font-medium transition-all">
-                    <i class="fa-solid fa-arrow-right-arrow-left"></i>Giao dịch
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 hover:text-gray-900 rounded-xl font-medium transition-all">
-                    <i class="fa-solid fa-coins"></i>Danh mục Crypto
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 hover:text-gray-900 rounded-xl font-medium transition-all">
-                    <i class="fa-solid fa-gear"></i>Cài đặt
-                </a>
+                <a href="/" class="flex items-center gap-3 px-4 py-3 bg-emerald-50 text-emerald-600 rounded-xl font-semibold"><i class="fa-solid fa-house"></i>Tổng quan</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 hover:text-gray-900 rounded-xl font-medium"><i class="fa-solid fa-arrow-right-arrow-left"></i>Giao dịch</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 hover:text-gray-900 rounded-xl font-medium"><i class="fa-solid fa-gear"></i>Cài đặt</a>
             </nav>
-
             <div class="p-4 border-t border-gray-100">
-                <a th:href="@{/logout}" class="flex items-center gap-3 px-4 py-3 text-rose-500 hover:bg-rose-50 rounded-xl font-semibold transition-all">
-                    <i class="fa-solid fa-right-from-bracket"></i>Đăng xuất
-                </a>
+                <a th:href="@{/logout}" class="flex items-center gap-3 px-4 py-3 text-rose-500 hover:bg-rose-50 rounded-xl font-semibold"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a>
             </div>
         </aside>
 
@@ -54,25 +39,21 @@
                     <h2 class="text-xl font-bold">Chào quay trở lại, <span class="text-emerald-600" th:text="${username}">User</span>!</h2>
                     <p class="text-xs text-gray-400 font-medium uppercase tracking-wider">Hôm nay: <span id="currentDate"></span></p>
                 </div>
-                
                 <div class="flex items-center gap-6">
-                    <button onclick="openAddModal()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-emerald-100 transition-all">
+                    <a href="/api/transactions/export" class="bg-blue-50 text-blue-600 hover:bg-blue-100 px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 border border-blue-200">
+                        <i class="fa-solid fa-file-excel"></i> Xuất Excel
+                    </a>
+                    <button onclick="openAddModal()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-emerald-100">
                         <i class="fa-solid fa-plus"></i>Thêm giao dịch
                     </button>
                     <div class="flex items-center gap-3 pl-6 border-l border-gray-100">
-                        <div class="text-right hidden sm:block">
-                            <p class="text-sm font-bold text-gray-900" th:text="${username}">User Name</p>
-                            <p class="text-xs text-gray-400">Thành viên Pro</p>
-                        </div>
-                        <div class="w-11 h-11 rounded-xl bg-emerald-100 border-2 border-white shadow-sm flex items-center justify-center text-emerald-700 font-bold text-lg uppercase" 
-                             th:text="${#strings.substring(username,0,1)}">T</div>
+                        <div class="w-11 h-11 rounded-xl bg-emerald-100 border-2 border-white shadow-sm flex items-center justify-center text-emerald-700 font-bold text-lg uppercase" th:text="${#strings.substring(username,0,1)}">T</div>
                     </div>
                 </div>
             </header>
 
             <div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
                 <div class="max-w-6xl mx-auto space-y-8">
-                    
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 relative overflow-hidden">
                             <div class="absolute right-0 top-0 p-4 opacity-10 text-emerald-600 text-6xl"><i class="fa-solid fa-wallet"></i></div>
@@ -91,25 +72,29 @@
                         </div>
                     </div>
 
+                    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-piggy-bank text-emerald-500"></i>Mục tiêu tiết kiệm</h4>
+                            <button onclick="openSavingModal()" class="text-sm font-bold text-emerald-600 bg-emerald-50 px-4 py-2 rounded-xl hover:bg-emerald-100 transition-all">+ Tạo quỹ mới</button>
+                        </div>
+                        <div id="savingGoalsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 min-h-[350px]">
                             <h4 class="font-bold text-gray-900 mb-6 flex items-center gap-2"><i class="fa-solid fa-chart-line text-emerald-500"></i>Phân tích Thu & Chi</h4>
-                            <div class="relative h-[250px]">
-                                <canvas id="mainChart"></canvas>
-                            </div>
+                            <div class="relative h-[250px]"><canvas id="mainChart"></canvas></div>
                         </div>
                         <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 min-h-[350px]">
                             <h4 class="font-bold text-gray-900 mb-6 flex items-center gap-2"><i class="fa-solid fa-chart-pie text-emerald-500"></i>Cơ cấu chi tiêu</h4>
-                            <div class="max-w-[220px] mx-auto">
-                                <canvas id="categoryChart"></canvas>
-                            </div>
+                            <div class="max-w-[220px] mx-auto"><canvas id="categoryChart"></canvas></div>
                         </div>
                     </div>
 
                     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                         <div class="p-6 border-b border-gray-50 flex justify-between items-center">
                             <h4 class="font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-list-ul text-emerald-500"></i>Giao dịch gần đây</h4>
-                            <a href="#" class="text-emerald-600 text-sm font-bold hover:underline">Xem tất cả</a>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left">
@@ -124,32 +109,16 @@
                                 <tbody class="divide-y divide-gray-50">
                                     <tr th:each="t : ${transactions}" class="group hover:bg-gray-50 transition-all">
                                         <td class="px-8 py-5">
-                                            <span th:text="${t.category}" 
-                                                  th:class="${t.type == 'INCOME' ? 'px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg text-[11px] font-bold' : 'px-3 py-1.5 bg-rose-50 text-rose-600 rounded-lg text-[11px] font-bold'}">
-                                            </span>
+                                            <span th:text="${t.category}" th:class="${t.type == 'INCOME' ? 'px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg text-[11px] font-bold' : 'px-3 py-1.5 bg-rose-50 text-rose-600 rounded-lg text-[11px] font-bold'}"></span>
                                         </td>
                                         <td class="px-8 py-5">
                                             <p class="font-bold text-gray-900 text-sm" th:text="${t.description}"></p>
                                             <p class="text-[10px] text-gray-400" th:text="${#temporals.format(t.createdAt, 'dd/MM/yyyy HH:mm')}"></p>
                                         </td>
-                                        <td class="px-8 py-5 text-right font-black text-sm" 
-                                            th:text="${t.type == 'INCOME' ? '+' : '-'} + ${#numbers.formatDecimal(t.amount, 0, 'COMMA', 0, 'POINT')} + ' đ'"
-                                            th:classappend="${t.type == 'INCOME' ? 'text-emerald-600' : 'text-rose-600'}">
-                                        </td>
+                                        <td class="px-8 py-5 text-right font-black text-sm" th:text="${t.type == 'INCOME' ? '+' : '-'} + ${#numbers.formatDecimal(t.amount, 0, 'COMMA', 0, 'POINT')} + ' đ'" th:classappend="${t.type == 'INCOME' ? 'text-emerald-600' : 'text-rose-600'}"></td>
                                         <td class="px-8 py-5 text-center flex justify-center gap-2">
-                                            <button th:data-id="${t.id}" th:data-amount="${t.amount}" th:data-type="${t.type}" th:data-category="${t.category}" th:data-desc="${t.description}"
-                                                    onclick="fillEditModal(this)" 
-                                                    class="w-8 h-8 text-gray-300 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-all flex items-center justify-center">
-                                                <i class="fa-solid fa-pen text-xs"></i>
-                                            </button>
-                                            <button th:onclick="'deleteTransaction(' + ${t.id} + ')'" 
-                                                    class="w-8 h-8 text-gray-300 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all flex items-center justify-center">
-                                                <i class="fa-regular fa-trash-can text-xs"></i>
-                                            </button>
+                                            <button th:onclick="'deleteTransaction(' + ${t.id} + ')'" class="w-8 h-8 text-gray-300 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all flex items-center justify-center"><i class="fa-regular fa-trash-can text-xs"></i></button>
                                         </td>
-                                    </tr>
-                                    <tr th:if="${#lists.isEmpty(transactions)}">
-                                        <td colspan="4" class="py-20 text-center text-gray-400 italic">Chưa có giao dịch nào...</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -160,13 +129,12 @@
         </main>
     </div>
 
-    <div id="transactionModal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 transition-all">
-        <div class="bg-white p-8 rounded-[32px] shadow-2xl w-full max-w-md border border-gray-100 transform scale-95 transition-transform">
+    <div id="transactionModal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-[32px] shadow-2xl w-full max-w-md">
             <div class="flex justify-between items-center mb-8">
                 <h3 id="modalTitle" class="text-2xl font-black text-gray-900 tracking-tight">Thêm giao dịch</h3>
                 <button onclick="closeModal()" class="text-gray-400 hover:text-gray-900"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
-            
             <form id="addTransactionForm" class="space-y-5">
                 <input type="hidden" id="transactionId" value="">
                 <div>
@@ -183,12 +151,35 @@
                 </div>
                 <div>
                     <label class="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">Danh mục & Ghi chú</label>
-                    <input type="text" id="category" placeholder="Danh mục" class="w-full p-4 bg-gray-50 border border-transparent rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 mb-3 text-sm">
-                    <input type="text" id="description" placeholder="Ghi chú nội dung" class="w-full p-4 bg-gray-50 border border-transparent rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                    <input type="text" id="category" placeholder="Danh mục" class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 mb-3 text-sm">
+                    <input type="text" id="description" placeholder="Ghi chú nội dung" class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
                 </div>
                 <div class="flex gap-4 pt-4">
                     <button type="button" onclick="closeModal()" class="flex-1 py-4 bg-gray-100 text-gray-500 rounded-2xl font-bold">Hủy</button>
-                    <button type="submit" class="flex-1 py-4 bg-emerald-500 text-white rounded-2xl font-bold shadow-lg shadow-emerald-200">Lưu lại</button>
+                    <button type="submit" class="flex-1 py-4 bg-emerald-500 text-white rounded-2xl font-bold">Lưu lại</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="savingModal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-[32px] shadow-2xl w-full max-w-md border border-gray-100">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-2xl font-black text-gray-900 tracking-tight">Tạo Quỹ Tiết Kiệm</h3>
+                <button onclick="closeSavingModal()" class="text-gray-400 hover:text-gray-900"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form id="addSavingForm" class="space-y-5">
+                <div>
+                    <label class="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">Tên Quỹ (VD: Du học, Mua xe...)</label>
+                    <input type="text" id="goalName" required class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 font-bold">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">Số tiền mục tiêu (VNĐ)</label>
+                    <input type="number" id="targetAmount" required class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 font-bold">
+                </div>
+                <div class="flex gap-4 pt-4">
+                    <button type="button" onclick="closeSavingModal()" class="flex-1 py-4 bg-gray-100 text-gray-500 rounded-2xl font-bold">Hủy</button>
+                    <button type="submit" class="flex-1 py-4 bg-emerald-500 text-white rounded-2xl font-bold shadow-lg shadow-emerald-200">Tạo quỹ</button>
                 </div>
             </form>
         </div>
@@ -197,108 +188,124 @@
     <script th:inline="javascript">
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById('currentDate').innerText = new Date().toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-
-            /*<![CDATA[*/
-            const rawTransactions = /*[[${transactions}]]*/ [];
-            /*]]>*/
+            
+            /*<![CDATA[*/ const rawTransactions = /*[[${transactions}]]*/ []; /*]]>*/
             const transactions = rawTransactions || [];
-
-            // --- 1. BIỂU ĐỒ TRÒN ---
+            
             const expenses = transactions.filter(t => t.type === 'EXPENSE');
             const categorySums = {};
-            expenses.forEach(t => {
-                const cat = t.category || 'Khác';
-                categorySums[cat] = (categorySums[cat] || 0) + parseFloat(t.amount || 0);
-            });
+            expenses.forEach(t => { categorySums[t.category || 'Khác'] = (categorySums[t.category || 'Khác'] || 0) + parseFloat(t.amount || 0); });
 
             new Chart(document.getElementById('categoryChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: Object.keys(categorySums).length > 0 ? Object.keys(categorySums) : ['Chưa có chi tiêu'],
-                    datasets: [{ 
-                        data: Object.values(categorySums).length > 0 ? Object.values(categorySums) : [1], 
-                        backgroundColor: ['#f43f5e', '#3b82f6', '#fbbf24', '#10b981', '#8b5cf6'], 
-                        borderWidth: 0 
-                    }]
+                    labels: Object.keys(categorySums).length > 0 ? Object.keys(categorySums) : ['Trống'],
+                    datasets: [{ data: Object.values(categorySums).length > 0 ? Object.values(categorySums) : [1], backgroundColor: ['#f43f5e', '#3b82f6', '#fbbf24', '#10b981', '#8b5cf6'], borderWidth: 0 }]
                 },
                 options: { cutout: '80%', plugins: { legend: { display: false } } }
             });
 
-            // --- 2. BIỂU ĐỒ CỘT (FIX LỖI TÀNG HÌNH) ---
             const monthlyData = {};
             transactions.forEach(t => {
                 const amt = parseFloat(t.amount) || 0;
                 let d = new Date(); 
                 if (t.createdAt) {
-                    if (Array.isArray(t.createdAt)) {
-                        d = new Date(t.createdAt[0], t.createdAt[1] - 1, t.createdAt[2]);
-                    } else {
-                        let parsedDate = new Date(t.createdAt);
-                        if (!isNaN(parsedDate)) d = parsedDate;
-                    }
+                    if (Array.isArray(t.createdAt)) d = new Date(t.createdAt[0], t.createdAt[1]-1, t.createdAt[2]);
+                    else if (!isNaN(new Date(t.createdAt))) d = new Date(t.createdAt);
                 }
                 const key = d.getFullYear() * 100 + d.getMonth();
-                if (!monthlyData[key]) monthlyData[key] = { label: `Th ${d.getMonth() + 1}`, inc: 0, exp: 0 };
-                if (t.type === 'INCOME') monthlyData[key].inc += amt;
-                else monthlyData[key].exp += amt;
+                if (!monthlyData[key]) monthlyData[key] = { label: `Th ${d.getMonth()+1}`, inc: 0, exp: 0 };
+                t.type === 'INCOME' ? monthlyData[key].inc += amt : monthlyData[key].exp += amt;
             });
 
             const sortedKeys = Object.keys(monthlyData).sort();
-            const barLabels = sortedKeys.length > 0 ? sortedKeys.map(k => monthlyData[k].label) : [`Th ${new Date().getMonth()+1}`];
-            const incData = sortedKeys.length > 0 ? sortedKeys.map(k => monthlyData[k].inc) : [0];
-            const expData = sortedKeys.length > 0 ? sortedKeys.map(k => monthlyData[k].exp) : [0];
-
-            // Xóa và tạo lại canvas để tránh lỗi cache state của Chart.js
-            const oldCanvas = document.getElementById('mainChart');
-            const newCanvas = document.createElement('canvas');
-            newCanvas.id = 'mainChart';
-            oldCanvas.parentNode.replaceChild(newCanvas, oldCanvas);
-
-            new Chart(newCanvas, {
+            new Chart(document.getElementById('mainChart'), {
                 type: 'bar',
                 data: {
-                    labels: barLabels,
+                    labels: sortedKeys.length > 0 ? sortedKeys.map(k => monthlyData[k].label) : [`Th ${new Date().getMonth()+1}`],
                     datasets: [
-                        { label: 'Thu nhập', data: incData, backgroundColor: '#10b981', borderRadius: 6, barPercentage: 0.5 },
-                        { label: 'Chi tiêu', data: expData, backgroundColor: '#f43f5e', borderRadius: 6, barPercentage: 0.5 }
+                        { label: 'Thu', data: sortedKeys.length > 0 ? sortedKeys.map(k => monthlyData[k].inc) : [0], backgroundColor: '#10b981', borderRadius: 6 },
+                        { label: 'Chi', data: sortedKeys.length > 0 ? sortedKeys.map(k => monthlyData[k].exp) : [0], backgroundColor: '#f43f5e', borderRadius: 6 }
                     ]
                 },
-                options: { 
-                    maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } },
-                        tooltip: { callbacks: { label: (ctx) => ctx.dataset.label + ': ' + ctx.raw.toLocaleString('vi-VN') + ' đ' } }
-                    },
-                    scales: { 
-                        y: { 
-                            beginAtZero: true, 
-                            ticks: { callback: v => v >= 1000000 ? (v/1000000)+' Tr' : v >= 1000 ? (v/1000)+' K' : v }
-                        },
-                        x: { grid: { display: false } }
-                    }
-                }
+                options: { maintainAspectRatio: false, plugins: { legend: { position: 'bottom'} }, scales: { y: { beginAtZero: true }, x: { grid: { display: false } } } }
             });
+
+            loadSavings();
         });
 
-        // --- CÁC HÀM XỬ LÝ ---
+        function loadSavings() {
+            fetch('/api/savings/all')
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById('savingGoalsContainer');
+                    if (data.length === 0) {
+                        container.innerHTML = '<p class="text-gray-400 text-sm italic col-span-full">Chưa có quỹ tiết kiệm nào. Hãy tạo một mục tiêu mới!</p>';
+                        return;
+                    }
+                    let html = '';
+                    data.forEach(goal => {
+                        const percent = goal.targetAmount > 0 ? Math.min(100, Math.round((goal.currentAmount / goal.targetAmount) * 100)) : 0;
+                        html += `
+                            <div class="border border-gray-100 rounded-2xl p-5 shadow-sm hover:border-emerald-200 hover:shadow-md transition-all relative overflow-hidden">
+                                ${percent === 100 ? '<div class="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl">HOÀN THÀNH</div>' : ''}
+                                <div class="flex justify-between items-start mb-3">
+                                    <h5 class="font-bold text-gray-900 text-lg truncate pr-4">${goal.goalName}</h5>
+                                    <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">${percent}%</span>
+                                </div>
+                                <div class="w-full bg-gray-100 rounded-full h-2 mb-3 overflow-hidden">
+                                    <div class="bg-emerald-500 h-2 rounded-full transition-all duration-1000" style="width: ${percent}%"></div>
+                                </div>
+                                <div class="flex justify-between text-xs font-bold text-gray-400 mb-5">
+                                    <span class="text-gray-700">${goal.currentAmount.toLocaleString('vi-VN')} đ</span>
+                                    <span>/ ${goal.targetAmount.toLocaleString('vi-VN')} đ</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button onclick="addMoneyToGoal(${goal.id})" class="flex-1 text-xs font-bold bg-blue-50 text-blue-600 py-2.5 rounded-xl hover:bg-blue-100 transition-all"><i class="fa-solid fa-plus mr-1"></i>Nạp tiền</button>
+                                    <button onclick="deleteGoal(${goal.id})" class="text-xs font-bold bg-rose-50 text-rose-600 px-3 py-2.5 rounded-xl hover:bg-rose-100 transition-all"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                });
+        }
+
+        function openSavingModal() { document.getElementById('savingModal').classList.remove('hidden'); }
+        function closeSavingModal() { document.getElementById('savingModal').classList.add('hidden'); }
+
+        document.getElementById('addSavingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const data = {
+                goalName: document.getElementById('goalName').value,
+                targetAmount: document.getElementById('targetAmount').value
+            };
+            fetch('/api/savings/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(res => { if(res.ok) { closeSavingModal(); location.reload(); }});
+        });
+
+        function addMoneyToGoal(id) {
+            const amountStr = prompt("Nhập số tiền muốn trích vào quỹ này (VNĐ):");
+            if (amountStr && !isNaN(amountStr) && amountStr > 0) {
+                fetch(`/api/savings/add-money/${id}?amount=${amountStr}`, { method: 'POST' })
+                .then(res => { if(res.ok) location.reload(); else alert('Lỗi nạp tiền!'); });
+            }
+        }
+
+        function deleteGoal(id) {
+            if(confirm('Bạn có chắc chắn muốn xóa quỹ này không?')) {
+                fetch('/api/savings/delete/' + id, { method: 'DELETE' })
+                .then(res => { if(res.ok) location.reload(); });
+            }
+        }
+
         function openModal() { document.getElementById('transactionModal').classList.remove('hidden'); }
         function closeModal() { document.getElementById('transactionModal').classList.add('hidden'); }
-        function openAddModal() {
-            document.getElementById('transactionId').value = '';
-            document.getElementById('addTransactionForm').reset();
-            setType('INCOME');
-            document.getElementById('modalTitle').innerText = 'Thêm giao dịch';
-            openModal();
-        }
-        function fillEditModal(btn) {
-            document.getElementById('transactionId').value = btn.getAttribute('data-id');
-            document.getElementById('amount').value = btn.getAttribute('data-amount');
-            document.getElementById('category').value = btn.getAttribute('data-category');
-            document.getElementById('description').value = btn.getAttribute('data-desc');
-            setType(btn.getAttribute('data-type'));
-            document.getElementById('modalTitle').innerText = 'Sửa giao dịch';
-            openModal();
-        }
+        function openAddModal() { document.getElementById('transactionId').value = ''; document.getElementById('addTransactionForm').reset(); setType('INCOME'); document.getElementById('modalTitle').innerText = 'Thêm giao dịch'; openModal(); }
+        
         function setType(t) {
             document.getElementById('type').value = t;
             const bI = document.getElementById('btnIncome'), bE = document.getElementById('btnExpense');
@@ -310,27 +317,17 @@
                 bI.className = "py-3 bg-gray-50 text-gray-400 border-2 border-transparent rounded-2xl font-bold";
             }
         }
+
         document.getElementById('addTransactionForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const id = document.getElementById('transactionId').value;
-            const data = {
-                amount: document.getElementById('amount').value,
-                type: document.getElementById('type').value,
-                category: document.getElementById('category').value,
-                description: document.getElementById('description').value
-            };
+            const data = { amount: document.getElementById('amount').value, type: document.getElementById('type').value, category: document.getElementById('category').value, description: document.getElementById('description').value };
             if(id) data.id = id;
-            fetch('/api/transactions/add', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            }).then(res => { if(res.ok) location.reload(); });
+            fetch('/api/transactions/add', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(res => { if(res.ok) location.reload(); });
         });
+
         function deleteTransaction(id) {
-            if(confirm('Xóa giao dịch này?')) {
-                fetch('/api/transactions/delete/' + id, { method: 'DELETE' })
-                .then(res => { if(res.ok) location.reload(); else alert('Lỗi: Không thể xóa!'); });
-            }
+            if(confirm('Xóa giao dịch này?')) { fetch('/api/transactions/delete/' + id, { method: 'DELETE' }).then(res => { if(res.ok) location.reload(); }); }
         }
     </script>
 </body>
