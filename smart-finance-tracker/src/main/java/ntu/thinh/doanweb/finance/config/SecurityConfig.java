@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -11,21 +13,26 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // Tắt CSRF để form Đăng ký/Đăng nhập hoạt động
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/register", "/css/**", "/js/**").permitAll() // Mở cửa các trang này
-                .anyRequest().authenticated() // Các trang khác (như Dashboard) phải đăng nhập
+                .requestMatchers("/login", "/register", "/css/**", "/js/**", "/api/user/upgrade-passwords").permitAll()
+                .anyRequest().authenticated()
             )
             .formLogin(form -> form
                 .loginPage("/login")
-                .loginProcessingUrl("/login") // Nơi Spring tự động nhận dữ liệu username/password
-                .defaultSuccessUrl("/", true) // Đăng nhập thành công thì về trang chủ
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/", true)
                 .permitAll()
             )
             .logout(logout -> logout
-                .logoutSuccessUrl("/login?logout") // Đăng xuất xong về lại trang login
+                .logoutSuccessUrl("/login?logout")
                 .permitAll()
             );
 

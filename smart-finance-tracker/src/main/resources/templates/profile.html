@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ cá nhân - FinTrack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 overflow-hidden">
+    <div class="flex h-screen">
+        <aside class="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
+            <div class="p-6 flex items-center gap-3 text-emerald-600 font-bold text-2xl">
+                <div class="bg-emerald-500 text-white p-2 rounded-lg"><i class="fa-solid fa-chart-pie text-xl"></i></div>
+                <span>FinTrack</span>
+            </div>
+            <nav class="flex-1 px-4 mt-4 space-y-1">
+                <a href="/" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-xl font-medium"><i class="fa-solid fa-house"></i>Tổng quan</a>
+                <a href="/profile" class="flex items-center gap-3 px-4 py-3 bg-emerald-50 text-emerald-600 rounded-xl font-semibold"><i class="fa-solid fa-user"></i>Hồ sơ cá nhân</a>
+            </nav>
+            <div class="p-4 border-t border-gray-100">
+                <a th:href="@{/logout}" class="flex items-center gap-3 px-4 py-3 text-rose-500 hover:bg-rose-50 rounded-xl font-semibold"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col overflow-y-auto">
+            <header class="h-20 bg-white border-b border-gray-100 flex items-center px-8 shrink-0">
+                <a href="/" class="text-gray-400 hover:text-emerald-600 transition-colors mr-4"><i class="fa-solid fa-arrow-left text-xl"></i></a>
+                <h2 class="text-xl font-bold">Cập nhật thông tin</h2>
+            </header>
+
+            <div class="p-8 max-w-4xl mx-auto w-full">
+                <div class="bg-white rounded-[32px] shadow-sm border border-gray-100 p-8 md:p-12">
+                    <form id="profileForm" class="space-y-8">
+                        <div class="flex flex-col md:flex-row gap-8 items-center md:items-start border-b border-gray-100 pb-8">
+                            <div class="relative group cursor-pointer">
+                                <div class="w-32 h-32 rounded-full border-4 border-emerald-50 bg-emerald-100 flex items-center justify-center text-emerald-600 text-4xl font-black uppercase overflow-hidden shadow-md" id="avatarPreviewContainer">
+                                    <span id="defaultAvatarText" th:text="${#strings.substring(username,0,1)}">T</span>
+                                    <img id="avatarImage" src="" class="hidden w-full h-full object-cover">
+                                </div>
+                                <div class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <i class="fa-solid fa-camera text-white text-2xl"></i>
+                                </div>
+                                <input type="file" id="avatarInput" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            </div>
+                            <div class="flex-1 text-center md:text-left">
+                                <h3 class="text-2xl font-black text-gray-900" id="currentUserNameDisp" th:text="${username}">User</h3>
+                                <p class="text-gray-400 font-medium mb-4">Cập nhật ảnh đại diện để cá nhân hóa tài khoản.</p>
+                                <button type="button" onclick="document.getElementById('avatarInput').click()" class="px-5 py-2.5 bg-emerald-50 text-emerald-600 font-bold rounded-xl border-2 border-emerald-500 hover:bg-emerald-100 transition-all">Thay đổi ảnh</button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="col-span-2">
+                                <label class="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">Tên đăng nhập</label>
+                                <input type="text" th:value="${username}" disabled class="w-full p-4 bg-gray-100 text-gray-400 rounded-2xl outline-none font-bold cursor-not-allowed border border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">Họ và tên</label>
+                                <input type="text" id="fullName" placeholder="Nhập họ và tên..." class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 font-bold">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">Số điện thoại</label>
+                                <input type="text" id="phone" placeholder="Nhập số điện thoại..." class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 font-bold">
+                            </div>
+                            <div class="col-span-2">
+                                <label class="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">Email liên hệ</label>
+                                <input type="email" id="email" placeholder="example@email.com" class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 font-bold">
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end pt-6">
+                            <button type="submit" class="px-8 py-4 bg-emerald-500 text-white rounded-2xl font-bold shadow-lg shadow-emerald-200 hover:bg-emerald-600 transition-all">Lưu thông tin</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const avatarInput = document.getElementById('avatarInput');
+        const avatarImage = document.getElementById('avatarImage');
+        const defaultAvatarText = document.getElementById('defaultAvatarText');
+        let base64Avatar = "";
+
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/api/user/me')
+                .then(res => res.json())
+                .then(user => {
+                    document.getElementById('fullName').value = user.fullName || "";
+                    document.getElementById('phone').value = user.phone || "";
+                    document.getElementById('email').value = user.email || "";
+                    if (user.avatar) {
+                        avatarImage.src = user.avatar;
+                        avatarImage.classList.remove('hidden');
+                        defaultAvatarText.classList.add('hidden');
+                        base64Avatar = user.avatar;
+                    }
+                });
+        });
+
+        avatarInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    base64Avatar = event.target.result;
+                    avatarImage.src = base64Avatar;
+                    avatarImage.classList.remove('hidden');
+                    defaultAvatarText.classList.add('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const data = {
+                fullName: document.getElementById('fullName').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                avatar: base64Avatar
+            };
+
+            fetch('/api/user/update-profile', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(res => {
+                if (res.ok) {
+                    alert('Đã cập nhật thông tin hồ sơ!');
+                    window.location.href = "/";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
