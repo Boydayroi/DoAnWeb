@@ -69,17 +69,17 @@
                         <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 relative overflow-hidden">
                             <div class="absolute right-0 top-0 p-4 opacity-10 text-emerald-600 text-6xl"><i class="fa-solid fa-wallet"></i></div>
                             <p class="text-gray-500 font-semibold text-sm">Tổng số dư</p>
-                            <h3 class="text-3xl font-bold text-gray-900 mt-2" th:text="${#numbers.formatDecimal(totalBalance, 0, 'COMMA', 0, 'POINT')} + ' đ'">0 đ</h3>
+                            <h3 class="text-3xl font-bold text-gray-900 mt-2" th:text="${totalBalance != null ? #numbers.formatDecimal(totalBalance, 0, 'COMMA', 0, 'POINT') : '0'} + ' đ'">0 đ</h3>
                         </div>
                         <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 relative overflow-hidden">
                             <div class="absolute right-0 top-0 p-4 opacity-10 text-blue-600 text-6xl"><i class="fa-solid fa-circle-arrow-down"></i></div>
                             <p class="text-gray-500 font-semibold text-sm">Tổng Thu nhập</p>
-                            <h3 class="text-3xl font-bold text-blue-600 mt-2" th:text="'+' + ${#numbers.formatDecimal(totalIncome, 0, 'COMMA', 0, 'POINT')} + ' đ'">+0 đ</h3>
+                            <h3 class="text-3xl font-bold text-blue-600 mt-2" th:text="'+' + ${totalIncome != null ? #numbers.formatDecimal(totalIncome, 0, 'COMMA', 0, 'POINT') : '0'} + ' đ'">+0 đ</h3>
                         </div>
                         <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 relative overflow-hidden">
                             <div class="absolute right-0 top-0 p-4 opacity-10 text-rose-600 text-6xl"><i class="fa-solid fa-circle-arrow-up"></i></div>
                             <p class="text-gray-500 font-semibold text-sm">Tổng Chi tiêu</p>
-                            <h3 class="text-3xl font-bold text-rose-600 mt-2" th:text="'-' + ${#numbers.formatDecimal(totalExpense, 0, 'COMMA', 0, 'POINT')} + ' đ'">-0 đ</h3>
+                            <h3 class="text-3xl font-bold text-rose-600 mt-2" th:text="'-' + ${totalExpense != null ? #numbers.formatDecimal(totalExpense, 0, 'COMMA', 0, 'POINT') : '0'} + ' đ'">-0 đ</h3>
                         </div>
                     </div>
 
@@ -88,7 +88,8 @@
                             <h4 class="font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-piggy-bank text-emerald-500"></i>Mục tiêu tiết kiệm</h4>
                             <button onclick="openSavingModal()" class="text-sm font-bold text-emerald-600 bg-emerald-50 px-4 py-2 rounded-xl hover:bg-emerald-100 transition-all">+ Tạo quỹ mới</button>
                         </div>
-                        <div id="savingGoalsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                        <div id="savingGoalsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            </div>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -166,7 +167,7 @@
                 </div>
                 <div>
                     <label class="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">Danh mục & Ghi chú</label>
-                    <input type="text" id="category" placeholder="Danh mục" class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 mb-3 text-sm">
+                    <input type="text" id="category" placeholder="Danh mục" class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 mb-3 text-sm" required>
                     <input type="text" id="description" placeholder="Ghi chú nội dung" class="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
                 </div>
                 <div class="flex gap-4 pt-4">
@@ -202,8 +203,10 @@
 
     <script th:inline="javascript">
         document.addEventListener("DOMContentLoaded", function() {
+            // Ngày tháng
             document.getElementById('currentDate').innerText = new Date().toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
             
+            // Lấy thông tin User để hiển thị Avatar
             fetch('/api/user/me')
                 .then(res => res.json())
                 .then(user => {
@@ -216,8 +219,9 @@
                         document.getElementById('headerAvatarImg').classList.remove('hidden');
                         document.getElementById('headerAvatarText').classList.add('hidden');
                     }
-                });
+                }).catch(e => console.log("Không tải được API user/me"));
 
+            // Biểu đồ
             /*<![CDATA[*/ const rawTransactions = /*[[${transactions}]]*/ []; /*]]>*/
             const transactions = rawTransactions || [];
             
@@ -225,6 +229,7 @@
             const categorySums = {};
             expenses.forEach(t => { categorySums[t.category || 'Khác'] = (categorySums[t.category || 'Khác'] || 0) + parseFloat(t.amount || 0); });
 
+            // Chart Danh mục
             new Chart(document.getElementById('categoryChart'), {
                 type: 'doughnut',
                 data: {
@@ -234,6 +239,7 @@
                 options: { cutout: '80%', plugins: { legend: { display: false } } }
             });
 
+            // Chart Cột
             const monthlyData = {};
             transactions.forEach(t => {
                 const amt = parseFloat(t.amount) || 0;
@@ -263,12 +269,13 @@
             loadSavings();
         });
 
+        // Nạp dữ liệu Quỹ tiết kiệm
         function loadSavings() {
             fetch('/api/savings/all')
                 .then(res => res.json())
                 .then(data => {
                     const container = document.getElementById('savingGoalsContainer');
-                    if (data.length === 0) {
+                    if (!data || data.length === 0) {
                         container.innerHTML = '<p class="text-gray-400 text-sm italic col-span-full">Chưa có quỹ nào</p>';
                         return;
                     }
@@ -290,16 +297,17 @@
                                     <span>/ ${goal.targetAmount.toLocaleString('vi-VN')} đ</span>
                                 </div>
                                 <div class="flex gap-2">
-                                    <button onclick="addMoneyToGoal(${goal.id})" class="flex-1 text-xs font-bold bg-blue-50 text-blue-600 py-2.5 rounded-xl hover:bg-blue-100 transition-all"><i class="fa-solid fa-plus mr-1"></i>Nạp</button>
+                                    <button onclick="addMoneyToGoal(${goal.id})" class="flex-1 text-xs font-bold bg-blue-50 text-blue-600 py-2.5 rounded-xl hover:bg-blue-100 transition-all"><i class="fa-solid fa-plus mr-1"></i> Nạp</button>
                                     <button onclick="deleteGoal(${goal.id})" class="text-xs font-bold bg-rose-50 text-rose-600 px-3 py-2.5 rounded-xl hover:bg-rose-100 transition-all"><i class="fa-solid fa-trash"></i></button>
                                 </div>
                             </div>
                         `;
                     });
                     container.innerHTML = html;
-                });
+                }).catch(e => console.log("Không tải được API savings"));
         }
 
+        // JS Modal Quỹ tiết kiệm
         function openSavingModal() { document.getElementById('savingModal').classList.remove('hidden'); }
         function closeSavingModal() { document.getElementById('savingModal').classList.add('hidden'); }
 
@@ -310,16 +318,17 @@
         });
 
         function addMoneyToGoal(id) {
-            const amountStr = prompt("Nhập số tiền:");
+            const amountStr = prompt("Nhập số tiền muốn nạp vào quỹ (VNĐ):");
             if (amountStr && !isNaN(amountStr) && amountStr > 0) {
                 fetch(`/api/savings/add-money/${id}?amount=${amountStr}`, { method: 'POST' }).then(res => { if(res.ok) location.reload(); });
             }
         }
 
         function deleteGoal(id) {
-            if(confirm('Xóa quỹ?')) { fetch('/api/savings/delete/' + id, { method: 'DELETE' }).then(res => { if(res.ok) location.reload(); }); }
+            if(confirm('Bạn có chắc chắn muốn xóa quỹ này?')) { fetch('/api/savings/delete/' + id, { method: 'DELETE' }).then(res => { if(res.ok) location.reload(); }); }
         }
 
+        // JS Modal Giao dịch
         function openModal() { document.getElementById('transactionModal').classList.remove('hidden'); }
         function closeModal() { document.getElementById('transactionModal').classList.add('hidden'); }
         function openAddModal() { document.getElementById('transactionId').value = ''; document.getElementById('addTransactionForm').reset(); setType('INCOME'); document.getElementById('modalTitle').innerText = 'Thêm giao dịch'; openModal(); }
@@ -338,11 +347,11 @@
             document.getElementById('type').value = t;
             const bI = document.getElementById('btnIncome'), bE = document.getElementById('btnExpense');
             if(t === 'INCOME') {
-                bI.className = "py-3 bg-emerald-50 text-emerald-600 border-2 border-emerald-500 rounded-2xl font-bold";
-                bE.className = "py-3 bg-gray-50 text-gray-400 border-2 border-transparent rounded-2xl font-bold";
+                bI.className = "py-3 bg-emerald-50 text-emerald-600 border-2 border-emerald-500 rounded-2xl font-bold transition-all";
+                bE.className = "py-3 bg-gray-50 text-gray-400 border-2 border-transparent rounded-2xl font-bold transition-all";
             } else {
-                bE.className = "py-3 bg-rose-50 text-rose-600 border-2 border-rose-500 rounded-2xl font-bold";
-                bI.className = "py-3 bg-gray-50 text-gray-400 border-2 border-transparent rounded-2xl font-bold";
+                bE.className = "py-3 bg-rose-50 text-rose-600 border-2 border-rose-500 rounded-2xl font-bold transition-all";
+                bI.className = "py-3 bg-gray-50 text-gray-400 border-2 border-transparent rounded-2xl font-bold transition-all";
             }
         }
 
@@ -355,7 +364,7 @@
         });
 
         function deleteTransaction(id) {
-            if(confirm('Xóa?')) { fetch('/api/transactions/delete/' + id, { method: 'DELETE' }).then(res => { if(res.ok) location.reload(); }); }
+            if(confirm('Bạn có chắc chắn muốn xóa giao dịch này?')) { fetch('/api/transactions/delete/' + id, { method: 'DELETE' }).then(res => { if(res.ok) location.reload(); }); }
         }
     </script>
 </body>
