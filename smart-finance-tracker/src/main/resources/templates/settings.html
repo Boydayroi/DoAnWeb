@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cài đặt hệ thống - FinTrack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-link.active { background-color: #f0fdf4; color: #10b981; border-right: 4px solid #10b981; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 overflow-hidden">
+
+    <div class="flex h-screen">
+        <aside class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-6 flex items-center gap-3 text-emerald-600 font-bold text-2xl">
+                <div class="bg-emerald-500 text-white p-2 rounded-lg"><i class="fa-solid fa-chart-pie"></i></div>
+                <span>FinTrack</span>
+            </div>
+            <nav class="flex-1 px-4 mt-4 space-y-1">
+                <a href="/" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-xl font-medium"><i class="fa-solid fa-house"></i>Tổng quan</a>
+                <a href="/settings" class="flex items-center gap-3 px-4 py-3 bg-emerald-50 text-emerald-600 rounded-xl font-semibold"><i class="fa-solid fa-gear"></i>Cài đặt</a>
+            </nav>
+            <div class="p-4 border-t border-gray-100">
+                <a th:href="@{/logout}" class="flex items-center gap-3 px-4 py-3 text-rose-500 hover:bg-rose-50 rounded-xl font-semibold"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col overflow-hidden">
+            <header class="h-20 bg-white border-b border-gray-100 flex items-center px-8 shrink-0 gap-4">
+                <a href="/" class="text-gray-400 hover:text-gray-900"><i class="fa-solid fa-arrow-left text-xl"></i></a>
+                <h2 class="text-xl font-bold">Cài đặt hệ thống</h2>
+            </header>
+
+            <div class="flex flex-1 overflow-hidden">
+                <div class="w-64 bg-white border-r border-gray-100 py-6">
+                    <nav class="space-y-1">
+                        <button onclick="switchTab(event, 'profile-tab')" class="tab-link active w-full flex items-center gap-3 px-6 py-4 font-bold text-sm text-left">
+                            <i class="fa-solid fa-circle-user"></i>Thông tin cá nhân
+                        </button>
+                        <button onclick="switchTab(event, 'security-tab')" class="tab-link w-full flex items-center gap-3 px-6 py-4 font-bold text-sm text-gray-500 hover:bg-gray-50 text-left">
+                            <i class="fa-solid fa-shield-halved"></i>Đổi mật khẩu
+                        </button>
+                        <button onclick="switchTab(event, 'ui-tab')" class="tab-link w-full flex items-center gap-3 px-6 py-4 font-bold text-sm text-gray-500 hover:bg-gray-50 text-left">
+                            <i class="fa-solid fa-palette"></i>Cấu hình hệ thống
+                        </button>
+                    </nav>
+                </div>
+
+                <div class="flex-1 overflow-y-auto p-12 bg-white custom-scrollbar">
+                    <div class="max-w-2xl">
+                        
+                        <div id="profile-tab" class="tab-content active space-y-8">
+                            <div class="flex items-center gap-6 pb-8 border-b">
+                                <div class="relative w-24 h-24 rounded-2xl bg-emerald-100 flex items-center justify-center text-emerald-600 text-3xl font-black overflow-hidden border-4 border-white shadow-sm">
+                                    <span id="txtAvatar" th:text="${#strings.substring(username,0,1)}">T</span>
+                                    <img id="imgAvatar" src="" class="hidden w-full h-full object-cover">
+                                    <input type="file" id="fileInput" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold" th:text="${username}">Username</h3>
+                                    <button onclick="document.getElementById('fileInput').click()" class="text-xs font-bold text-emerald-600 mt-1">Thay đổi ảnh đại diện</button>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="col-span-2">
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase mb-2">Họ và tên</label>
+                                    <input type="text" id="fullName" class="w-full p-4 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-emerald-500 font-bold">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase mb-2">Số điện thoại</label>
+                                    <input type="text" id="phone" class="w-full p-4 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-emerald-500 font-bold">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase mb-2">Email</label>
+                                    <input type="email" id="email" class="w-full p-4 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-emerald-500 font-bold">
+                                </div>
+                            </div>
+                            <button onclick="saveProfile()" class="px-8 py-4 bg-emerald-500 text-white rounded-2xl font-bold shadow-lg shadow-emerald-100 hover:bg-emerald-600 transition-all">Lưu hồ sơ</button>
+                        </div>
+
+                        <div id="security-tab" class="tab-content space-y-8">
+                            <div class="bg-gray-50 p-8 rounded-[32px] space-y-6">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase mb-2">Mật khẩu mới</label>
+                                    <input type="password" id="newPass" class="w-full p-4 bg-white rounded-2xl border-none outline-none focus:ring-2 focus:ring-emerald-500 font-bold">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase mb-2">Xác nhận mật khẩu</label>
+                                    <input type="password" id="confirmPass" class="w-full p-4 bg-white rounded-2xl border-none outline-none focus:ring-2 focus:ring-emerald-500 font-bold">
+                                </div>
+                                <button onclick="changePass()" class="w-full py-4 bg-emerald-600 text-white rounded-2xl font-bold">Cập nhật mật khẩu</button>
+                            </div>
+                        </div>
+
+                        <div id="ui-tab" class="tab-content space-y-8">
+                            <div class="flex justify-between items-center py-6 border-b">
+                                <div><p class="font-bold">Đơn vị tiền tệ hiển thị</p><p class="text-xs text-gray-400">Đơn vị tiền tệ mặc định xử lý báo cáo</p></div>
+                                <span class="font-bold text-sm text-emerald-600">VNĐ (đ)</span>
+                            </div>
+                            <div class="flex justify-between items-center py-6 border-b">
+                                <div><p class="font-bold">Cảnh báo hạn mức</p><p class="text-xs text-gray-400">Gửi thông báo hệ thống khi tổng chi tiêu chạm ngưỡng 80%</p></div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let avatarBase64 = "";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch('/api/user/me').then(r => r.json()).then(u => {
+                document.getElementById('fullName').value = u.fullName || "";
+                document.getElementById('phone').value = u.phone || "";
+                document.getElementById('email').value = u.email || "";
+                if (u.avatar) {
+                    document.getElementById('imgAvatar').src = u.avatar;
+                    document.getElementById('imgAvatar').classList.remove('hidden');
+                    document.getElementById('txtAvatar').classList.add('hidden');
+                    avatarBase64 = u.avatar;
+                }
+            });
+        });
+
+        document.getElementById('fileInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = () => {
+                avatarBase64 = reader.result;
+                document.getElementById('imgAvatar').src = avatarBase64;
+                document.getElementById('imgAvatar').classList.remove('hidden');
+                document.getElementById('txtAvatar').classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function switchTab(evt, name) {
+            let i, content, links;
+            content = document.getElementsByClassName("tab-content");
+            for (i = 0; i < content.length; i++) content[i].classList.remove("active");
+            links = document.getElementsByClassName("tab-link");
+            for (i = 0; i < links.length; i++) {
+                links[i].classList.remove("active");
+                links[i].classList.add("text-gray-500");
+            }
+            document.getElementById(name).classList.add("active");
+            evt.currentTarget.classList.add("active");
+            evt.currentTarget.classList.remove("text-gray-500");
+        }
+
+        function saveProfile() {
+            const data = {
+                fullName: document.getElementById('fullName').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                avatar: avatarBase64
+            };
+            fetch('/api/user/update-profile', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            }).then(r => { if(r.ok) alert("Đã lưu thông tin cá nhân thành công!"); });
+        }
+
+        function changePass() {
+            const p1 = document.getElementById('newPass').value;
+            const p2 = document.getElementById('confirmPass').value;
+            if (p1 === p2 && p1.length >= 6) {
+                fetch('/api/user/change-password', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({newPassword: p1})
+                }).then(r => { if(r.ok) { alert("Đổi mật khẩu thành công! Vui lòng đăng nhập lại."); location.href="/logout"; }});
+            } else alert("Mật khẩu không trùng khớp hoặc ngắn hơn 6 ký tự!");
+        }
+    </script>
+</body>
+</html>
